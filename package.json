@@ -12,7 +12,6 @@
   "dependencies": {
     "react": "16.13.1",
     "react-native": "0.63.2",
-    "react-native-elements": "^2.2.1",
     "react-native-gifted-chat": "^0.16.3"
   },
   "devDependencies": {

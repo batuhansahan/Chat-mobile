@@ -9,8 +9,6 @@ class MessageContainer extends React.Component {
       isWs: 'Connecting',
       isConnected: false,
       isRoomJoined: false,
-      room: '',
-      username: '',
       messages: [],
     };
 
@@ -19,7 +17,7 @@ class MessageContainer extends React.Component {
       this.socket.send(
         JSON.stringify({
           action: 'chat-sub',
-          room: 'test',
+          room: this.props.room,
         }),
       );
       this.socket.onmessage = (e) => {
@@ -29,7 +27,6 @@ class MessageContainer extends React.Component {
         isWs: 'Connected',
         isConnected: true,
         isRoomJoined: false,
-        room: '',
       });
     };
     this.socket.onclose = (e) => {
@@ -41,10 +38,30 @@ class MessageContainer extends React.Component {
     };
 
     this.messageHandler = this.messageHandler.bind(this);
-    this.joinRoom = this.joinRoom.bind(this);
   }
 
   componentDidMount() {
+    this.setState({
+      messages: [
+        {
+          _id: 1,
+          text:
+            'Hello ' +
+            this.props.user +
+            ', you are in joined the "' +
+            this.props.room +
+            '" room',
+          createdAt: new Date(),
+          system: true,
+          user: {
+            _id: 2,
+            name: 'Batuhan Şahan',
+            avatar:
+              'https://avatars3.githubusercontent.com/u/26772801?s=460&u=fbc073316315b6cd7d7d090ee9b49c1f6e1220cd&v=4',
+          },
+        },
+      ],
+    });
     this.setState({isWs: 'Connecting'});
   }
 
@@ -55,28 +72,18 @@ class MessageContainer extends React.Component {
     }));
   };
 
-  joinRoom(room = 'Public', username = 'User') {
-    this.setState({isRoomJoined: true, room, username});
-    this.ws.send(
-      JSON.stringify({
-        action: 'chat-sub',
-        room: room,
-      }),
-    );
-  }
-
   sendMessage = (value) => {
-    const {room, username} = this.state;
+    const {room, user} = this.props;
     if (value) {
       this.socket.send(
         JSON.stringify({
           action: 'chat-pub',
-          room: 'test',
+          room: room,
           text: value[0].text,
           createdAt: new Date(),
           user: {
-            _id: 'test',
-            name: 'test',
+            _id: user,
+            name: user,
             avatar: 'https://i.hizliresim.com/iIBmll.png',
           },
         }),
@@ -85,14 +92,15 @@ class MessageContainer extends React.Component {
   };
 
   render() {
+    const {room, user} = this.props;
     return (
       <GiftedChat
         renderUsernameOnMessage={true}
         messages={this.state.messages}
         onSend={(messages) => this.sendMessage(messages)}
         user={{
-          _id: 'test',
-          name: 'test',
+          _id: user,
+          name: user,
           avatar: 'https://i.hizliresim.com/iIBmll.png',
         }}
       />
