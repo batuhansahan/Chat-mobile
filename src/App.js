@@ -48,7 +48,7 @@ class MessageContainer extends React.Component {
           text:
             'Hello ' +
             this.props.user +
-            ', you are in joined the "' +
+            ', You are in "' +
             this.props.room +
             '" room',
           createdAt: new Date(),
