@@ -77,6 +77,7 @@ class MessageContainer extends React.Component {
           user: {
             _id: 'test',
             name: 'test',
+            avatar: 'https://i.hizliresim.com/iIBmll.png',
           },
         }),
       );
@@ -92,7 +93,6 @@ class MessageContainer extends React.Component {
         user={{
           _id: 'test',
           name: 'test',
-
           avatar: 'https://i.hizliresim.com/iIBmll.png',
         }}
       />
