@@ -9,12 +9,7 @@ import MessageContainer from './src/App'
 
 const App = () => {
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
         <MessageContainer />
-      </SafeAreaView>
-    </>
   );
 };
 
